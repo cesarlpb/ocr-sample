@@ -4,12 +4,55 @@
 <head>
     <title>Upload Image</title>
     <link rel="shortcut icon" href="./static/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="./static/assets/bootstrap.min.css">
 </head>
-<body>
-    <h1>Upload Image</h1>
-    <form method="POST" enctype="multipart/form-data">
-        <input type="file" name="image">
-        <button type="submit">Process image</button>
-    </form>
+<body class="text-white bg bg-dark">
+    <h1 class="text-center mx-auto pt-3">Upload Image</h1>
+    <div class="col-8 mx-auto">
+        <form method="POST" enctype="multipart/form-data">
+            <p>Please select a .jpeg .jpg file with text:</p>
+            <div class="input-group mb-3 col-6">
+                <label class="input-group-text" for="inputGroupFile01">Upload</label>
+                <input type="file" class="form-control" name="image" id="inputGroupFile01" accept=".jpg,.jpeg">
+                <button id="submit-button" type="submit" class="btn btn-outline-secondary text-white">Process image</button>
+            </div>
+        </form>
+    </div> 
+
+    <!-- {% if not image_url %}
+        <p id="msg" class="lead mx-auto text-center col-8"></p>
+    {% endif %} -->
+
+    {% if image_url %}
+    <div class="row px-3">
+        <div class="col-5 col-md">
+            <img src="{{ image_url }}" width="100%" alt="uploaded image">
+        </div>
+        <div class="col-5 col-md">
+            {% if ocr_array %}
+                {% for entry in ocr_array %}
+                    <p>{{ entry }}</p>
+                {% endfor%}
+            {% else %}
+                <p id="msg"></p>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- <script>
+    // Obtener el botón de envío del formulario
+    let submitButton = document.getElementById("submit-button");
+
+    // Agregar un evento 'click' al botón de envío
+    submitButton.addEventListener("click", function(event) {
+    // Prevenir que el formulario se envíe automáticamente
+    event.preventDefault();
+
+    // Mostrar un mensaje de confirmación
+    let msg = document.getElementById("msg")
+    msg.innerText = "Processing..."
+    });
+    </script> -->
 </body>
 </html>
