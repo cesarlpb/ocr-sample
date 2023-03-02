@@ -63,11 +63,7 @@ multidict==6.0.4
 multiprocess==0.70.14
 networkx==3.0
 numpy==1.24.2
-<<<<<<< HEAD
 onnx==1.13.0
-=======
-onnx<=1.13.0
->>>>>>> 3f69a262e76e74c6f81890583815945cb87be884
 opencv-contrib-python==4.6.0.66
 opencv-python==4.6.0.66
 openpyxl==3.1.1
@@ -126,8 +122,4 @@ x2paddle==1.4.0
 yarl==1.8.2
 zipp==3.13.0
 zope.event==4.6
-<<<<<<< HEAD
 zope.interface==5.5.2
-=======
-zope.interface==5.5.2
->>>>>>> 3f69a262e76e74c6f81890583815945cb87be884
