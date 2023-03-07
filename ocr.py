@@ -56,10 +56,12 @@ def apply_ocr(filename="test.jpg"):
 
     #%%
     str_ = ""
+    lista = []
     for el in result[0]:
         print(el[1])
         str_ += f"{el[1]}\n\n"
-    return str_
+        lista.append(el[1])
+    return lista
 
 # str_result = apply_ocr()
 # print(str_result)

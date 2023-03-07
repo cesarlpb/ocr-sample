@@ -2,44 +2,78 @@
 <!doctype html>
 <html>
 <head>
-    <title>Upload Image</title>
-    <link rel="shortcut icon" href="./static/favicon.png" type="image/x-icon">
+    <title>Reconocedor de Matrículas con IA | Peintit</title>
+    <meta name="title" content="Reconocedor de Matrículas con IA | Peintit">
+    <meta name="description" content="Reconocedor de matrículas con Inteligencia Artificial">
+
+    <link rel="shortcut icon" href="./static/car.png" type="image/x-icon">
     <link rel="stylesheet" href="./static/assets/bootstrap.min.css">
+    <style>
+        .loader {
+            border: 8px solid #f3f3f3; /* Color del borde de la animación */
+            border-top: 8px solid #3498db; /* Color de la parte superior del borde de la animación */
+            border-radius: 50%; /* Hace el borde redondo */
+            width: 60px; /* Tamaño de la animación */
+            height: 60px; /* Tamaño de la animación */
+            animation: spin 2s linear infinite; /* Asigna la animación "spin" a la clase "loader" */
+        }
+
+        @keyframes spin {
+        0% { transform: rotate(0deg); } /* Define la rotación de la animación en el 0% */
+        100% { transform: rotate(360deg); } /* Define la rotación de la animación en el 100% */
+        }
+    </style>
 </head>
 <body class="text-white bg bg-dark">
-    <h1 class="text-center mx-auto pt-3">Upload Image</h1>
-    <div class="col-8 mx-auto">
-        <form method="POST" enctype="multipart/form-data">
-            <p>Please select a .jpeg .jpg file with text:</p>
-            <div class="input-group mb-3 col-6">
-                <label class="input-group-text" for="inputGroupFile01">Upload</label>
-                <input type="file" class="form-control" name="image" id="inputGroupFile01" accept=".jpg,.jpeg">
-                <button id="submit-button" type="submit" class="btn btn-outline-secondary text-white">Process image</button>
+    <div class="container">
+        <h1 class="text-center mx-auto pt-3">Reconocedor de matrículas</h1>
+        <div class="row mx-auto text-center col-3 my-3">
+            <img src="./static/plate.png" alt="plate">
+        </div>
+        <div class="col-8 mx-auto">
+            <form method="POST" enctype="multipart/form-data" onsubmit="mostrarAnimacion()">
+                <p>Sube un archivo .jpeg .jpg para reconocer el texto:</p>
+                <div class="input-group mb-3 col-6">
+                    <label class="input-group-text" for="inputGroupFile01">
+                        <img src="./static/car.png" width="24" alt="car-icon">
+                    </label>
+                    <input type="file" class="form-control" name="image" id="inputGroupFile01" accept=".jpg,.jpeg">
+                    <button id="submit-button" type="submit" class="btn btn-outline-secondary text-white">Procesar</button>
+                </div>
+            </form>
+            <div id="animacion" class="col-3 mx-auto" style="display:none;">
+                <p class="text-center">Procesando imagen...</p>
+                <div class="loader mx-auto"></div>
             </div>
-        </form>
-    </div> 
+        </div> 
 
-    <!-- {% if not image_url %}
-        <p id="msg" class="lead mx-auto text-center col-8"></p>
-    {% endif %} -->
+        <!-- {% if not image_url %}
+            <p id="msg" class="lead mx-auto text-center col-8"></p>
+        {% endif %} -->
 
-    {% if image_url %}
-    <div class="row px-3">
-        <div class="col-5 col-md">
-            <img src="{{ image_url }}" width="100%" alt="uploaded image">
+        {% if image_url %}
+        <script>
+            document.getElementById("animacion").style.display = "none";
+        </script>
+        <div class="row mx-auto col-8 px-3 align-items-center">
+            <div class="col-5 col-md">
+                <img src="{{ image_url }}" width="100%" alt="uploaded image">
+            </div>
+            <div class="col-5 col-md">
+                {% if result %}
+                    <p>{{ result|safe }}</p>
+                {% elif error %}
+                    <p id="error">{{ error|safe }}</p>
+                {% endif %}
+            </div>
         </div>
-        <div class="col-5 col-md">
-            {% if ocr_array %}
-                {% for entry in ocr_array %}
-                    <p>{{ entry }}</p>
-                {% endfor%}
-            {% else %}
-                <p id="msg"></p>
-            {% endif %}
-        </div>
+        {% endif %}
     </div>
-    {% endif %}
-
+    <script>
+        function mostrarAnimacion() {
+          document.getElementById("animacion").style.display = "block";
+        }
+    </script>
     <!-- <script>
     // Obtener el botón de envío del formulario
     let submitButton = document.getElementById("submit-button");
